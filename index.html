@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReasonAI - Voice Interaction</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        #output {
+            color: #444;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            outline: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ReasonAI - Voice Interaction</h1>
+        <p>Speak to ReasonAI to engage.</p>
+        <div id="output"></div>
+        <button onclick="startListening()">Start Listening</button>
+    </div>
+
+    <script>
+        const recognition = new window.webkitSpeechRecognition();
+        recognition.continuous = false;
+
+        const supportedLanguages = [
+            'en-US', 'es-ES', 'fr-FR', 'de-DE', 'it-IT', 
+            'pt-PT', 'nl-NL', 'sv-SE', 'da-DK', 'fi-FI', 
+            'nb-NO', 'tr-TR', 'ru-RU', 'pl-PL', 'cs-CZ', 
+            'hu-HU', 'ro-RO', 'el-GR', 'ja-JP', 'ko-KR', 
+            'zh-CN', 'zh-TW', 'th-TH', 'id-ID', 'ms-MY', 
+            'vi-VN', 'hi-IN', 'bn-IN', 'ta-IN', 'te-IN',
+            'pcm', // Nigerian Pidgin
+        ];
+
+        recognition.lang = supportedLanguages;
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('output').innerText = 'You said: ' + transcript;
+            // Perform NLU to understand user intents and respond accordingly
+            handleUserInput(transcript);
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+        };
+
+        function startListening() {
+            recognition.start();
+            document.getElementById('output').innerText = 'Listening...';
+        }
+
+        function speakResponse(response) {
+            const synthesis = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(response);
+            synthesis.speak(utterance);
+        }
+
+        function handleUserInput(input) {
+            // Perform NLU and respond accordingly
+            // Example: If input contains a request for help, respond with assistance
+            if (input.toLowerCase().includes('help')) {
+                const response = "Sure, I'm here to assist you. What do you need help with?";
+                speakResponse(response);
+            } else {
+                // Handle other user intents or tasks based on input
+                // Example: Call APIs to solve world problems based on user input
+                // For demonstration purposes, let's just echo the input
+                speakResponse("You said: " + input);
+            }
+        }
+    </script>
+</body>
+</html>

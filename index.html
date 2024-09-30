@@ -89,12 +89,10 @@
                 <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
                 <div id="pagination" class="mt-8 flex justify-center space-x-2 hidden"></div>
-
-                <div id="debugInfo" class="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm"></div>
             </div>
         </main>
 
-      
+       
     </div>
 
     <script>
@@ -120,14 +118,6 @@
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                
-                document.getElementById('debugInfo').innerHTML = `
-                    <h3 class="font-bold mb-2">Debug Info:</h3>
-                    <p>URL: ${url}</p>
-                    <p>Response status: ${response.status}</p>
-                    <p>Response OK: ${response.ok}</p>
-                    <pre class="mt-2 overflow-auto max-h-40">${JSON.stringify(data, null, 2)}</pre>
-                `;
 
                 if (response.ok) {
                     return data;
@@ -137,7 +127,6 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('debugInfo').innerHTML += `<p class="text-red-500">Error: ${error.message}</p>`;
                 return null;
             }
         }

@@ -3,23 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeekWise AI - Smarter Search</title>
+    <meta name="google-site-verification" content="JneMKOV4FMsPuz89szSer4amrzf2Vz3lhB7jDjXgvUg" />
+    <title>SeekWise AI Search</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
-    <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .animate-spin {
-            animation: spin 1s linear infinite;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E3X65BGT5B"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -27,77 +15,82 @@
         gtag('js', new Date());
         gtag('config', 'G-E3X65BGT5B');
     </script>
-    
-<body class="h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-    <div id="app" class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="bg-gray-800 shadow-md py-4">
-            <div class="container mx-auto flex justify-between items-center px-4">
-                <h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
-                    SeekWise AI
-                </h1>
-                <p class="text-sm text-gray-400 italic">"Your smarter way to search"</p>
-                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-700 focus:outline-none">
-                    <i data-lucide="moon" class="h-5 w-5"></i>
-                </button>
-            </div>
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <span class="text-2xl font-bold">SeekWise <span class="text-blue-500">AI</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button @click="darkMode = !darkMode" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Toggle dark mode">
+                        <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                        <svg x-show="darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
         </header>
 
-        <!-- Main Content -->
         <main class="flex-grow container mx-auto px-4 py-8">
-            <div class="max-w-4xl mx-auto space-y-8">
-                <!-- Search Input -->
-                <div class="flex space-x-2">
-                    <input type="text" id="searchQuery" placeholder="Ask me anything..." 
-                           class="flex-grow px-4 py-3 rounded-lg border border-gray-700 bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 placeholder-gray-500">
-                    <button id="searchButton" 
-                            class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-all duration-200">
-                        <i data-lucide="search" class="h-5 w-5 inline-block mr-2"></i>Search
-                    </button>
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold text-center mb-8">Intelligent Search Powered by AI</h1>
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 mb-8">
+                    <div class="flex items-center mb-4">
+                        <input type="text" id="searchQuery" class="flex-grow p-3 border border-gray-300 dark:border-gray-600 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="What are you looking for?">
+                        <button onclick="search()" id="searchButton" class="p-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300 flex items-center justify-center min-w-[100px]">
+                            <svg class="w-5 h-5 mr-2 animate-pulse-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="setSearchType('web')" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 text-sm font-medium flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                            Web
+                        </button>
+                        <button onclick="setSearchType('image')" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 text-sm font-medium flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Images
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Search Type Buttons -->
-                <div class="flex justify-center space-x-4">
-                    <button id="webSearchBtn" class="px-4 py-2 rounded-full bg-gray-700 hover:bg-gray-600 text-white text-sm flex items-center">
-                        <i data-lucide="globe" class="h-5 w-5 mr-2"></i>Web
-                    </button>
-                    <button id="imageSearchBtn" class="px-4 py-2 rounded-full bg-gray-700 hover:bg-gray-600 text-white text-sm flex items-center">
-                        <i data-lucide="image" class="h-5 w-5 mr-2"></i>Images
-                    </button>
+                <div id="loading" class="hidden">
+                    <div class="flex justify-center items-center">
+                        <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
                 </div>
 
-                <!-- Loading Animation -->
-                <div id="loading" class="hidden text-center">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-                    <p class="mt-4 text-gray-400">Searching for the best results...</p>
-                </div>
+                <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-                <!-- Search Results -->
-                <div id="searchResults" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-                <!-- No Results -->
-                <div id="noResults" class="hidden text-center text-gray-400">
-                    <p>No results found. Try a different query.</p>
-                </div>
+                <div id="pagination" class="mt-8 flex justify-center space-x-2 hidden"></div>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="bg-gray-800 py-4">
-            <div class="container mx-auto text-center text-gray-400 text-sm">
-                <p>&copy; 2024 SeekWise AI. Powered by smarter algorithms.</p>
-                <div class="mt-2 space-x-4">
-                    <a href="#" class="hover:text-blue-400">Privacy Policy</a>
-                    <a href="#" class="hover:text-blue-400">Terms of Service</a>
-                    <a href="#" class="hover:text-blue-400">Contact Us</a>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    
-
-</main>
 
        
     </div>
@@ -236,4 +229,4 @@
         });
     </script>
 </body>
-</html>
+    </html>

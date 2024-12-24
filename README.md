@@ -36,7 +36,7 @@ We value your feedback! If you encounter any issues or have suggestions for impr
 
 Follow us on social media for the latest updates:
 
-- Twitter: [@SeekWiseAI](https://X.com/miraklegroup)
+- Twitter: [@MirakleGroup](https://X.com/miraklegroup)
   
 ## License
 

@@ -23,6 +23,14 @@
         .animate-pulse-slow {
             animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+        /* Theme Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
     </style>
 </head>
 <body class="h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
@@ -36,13 +44,9 @@
                     <span class="text-2xl font-bold">SeekWise <span class="text-blue-500">AI</span></span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button @click="darkMode = !darkMode" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Toggle dark mode">
-                        <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                        </svg>
-                        <svg x-show="darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
+                    </div>
+                <button class="theme-toggle" id="themeToggle">🌓</button>
+            </div>
                     </button>
                 </div>
             </nav>
@@ -95,6 +99,30 @@
        
     </div>
 
+    
+<script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            const isDark = root.style.getPropertyValue('--background-color') === '#1a202c';
+            
+            if (isDark) {
+                root.style.setProperty('--background-color', '#f7fafc');
+                root.style.setProperty('--text-color', '#2d3748');
+                root.style.setProperty('--primary-color', '#fff');
+                root.style.setProperty('--secondary-color', '#edf2f7');
+            } else {
+                root.style.setProperty('--background-color', '#1a202c');
+                root.style.setProperty('--text-color', '#e2e8f0');
+                root.style.setProperty('--primary-color', '#2d3748');
+                root.style.setProperty('--secondary-color', '#4a5568');
+            }
+        });
+</script>
+
+    
     <script>
         const API_KEY = 'AIzaSyBzjFL_N_JFjJJqpDUT4tCVV-F10xT6hyo';
         const SEARCH_ENGINE_ID = 'b2707667ad4f44eb1';
@@ -226,6 +254,7 @@
                 event.preventDefault();
                 search();
             }
+            
         });
     </script>
 </body>
